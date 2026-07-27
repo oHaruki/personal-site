@@ -37,7 +37,7 @@
   </script>
 
   <!-- The beatmap replay. Fixed and full-bleed, but it only DRAWS inside
-       #pf-zone below — see the renderer in script.js. -->
+       #pf-zone below - see the renderer in script.js. -->
   <canvas id="playfield" aria-hidden="true"></canvas>
   <div class="scrim"></div>
 
@@ -60,12 +60,12 @@
 
       <span class="w w--dash" title="hit objects in the loaded map">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>
-        <b id="k-obj">—</b>
+        <b id="k-obj">-</b>
       </span>
 
       <span class="w w--mem" title="circle size / approach rate">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="10" rx="1.5"/><path d="M6 11v2M10 11v2M14 11v2M18 11v2"/></svg>
-        <b id="k-cs">CS —</b><span class="u">/</span><b id="k-ar">AR —</b>
+        <b id="k-cs">CS -</b><span class="u">/</span><b id="k-ar">AR -</b>
       </span>
 
       <span class="w w--net" title="current combo in the replay">
@@ -86,7 +86,7 @@
         <button type="button" id="b-next" aria-label="Playback speed" title="Speed"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5l11 7-11 7z"/></svg></button>
       </span>
 
-      <a class="w w--now" id="k-nowlink" href="https://osu.ppy.sh/" target="_blank" rel="noopener"><b id="k-now">—</b></a>
+      <a class="w w--now" id="k-nowlink" href="https://osu.ppy.sh/" target="_blank" rel="noopener"><b id="k-now">-</b></a>
 
       <span class="sep"></span>
 
@@ -128,15 +128,15 @@
             <div class="nf__title"><b>haruki</b>@<b>byharuki.dev</b></div>
             <div class="nf__rule"></div>
             <dl class="nf__kv">
-              <dt>map</dt>      <dd id="nf-map">—</dd>
-              <dt>mapper</dt>   <dd id="nf-mapper">—</dd>
-              <dt>objects</dt>  <dd id="nf-obj">—</dd>
-              <dt>cs / ar</dt>  <dd id="nf-diff">—</dd>
-              <dt>loop</dt>     <dd id="nf-loop">—</dd>
+              <dt>map</dt>      <dd id="nf-map">-</dd>
+              <dt>mapper</dt>   <dd id="nf-mapper">-</dd>
+              <dt>objects</dt>  <dd id="nf-obj">-</dd>
+              <dt>cs / ar</dt>  <dd id="nf-diff">-</dd>
+              <dt>loop</dt>     <dd id="nf-loop">-</dd>
               <dt>renderer</dt> <dd>canvas2d</dd>
               <dt>theme</dt>    <dd id="nf-theme">tokyo night</dd>
-              <dt>display</dt>  <dd id="nf-disp">—</dd>
-              <dt>uptime</dt>   <dd id="nf-up">—</dd>
+              <dt>display</dt>  <dd id="nf-disp">-</dd>
+              <dt>uptime</dt>   <dd id="nf-up">-</dd>
             </dl>
             <div class="nf__pal" aria-hidden="true">
               <i style="background:var(--red)"></i><i style="background:var(--orange)"></i>
@@ -194,10 +194,10 @@
       <section class="panel">
         <div class="panel__h"><span class="t">wallpaper</span><span class="r">replaying</span></div>
         <dl class="kv">
-          <dt>map</dt>        <dd id="p-title">—</dd>
-          <dt>difficulty</dt> <dd id="p-diff">—</dd>
-          <dt>mapper</dt>     <dd id="p-creator">—</dd>
-          <dt>cs / ar</dt>    <dd><span id="p-cs">—</span> / <span id="p-ar">—</span></dd>
+          <dt>map</dt>        <dd id="p-title">-</dd>
+          <dt>difficulty</dt> <dd id="p-diff">-</dd>
+          <dt>mapper</dt>     <dd id="p-creator">-</dd>
+          <dt>cs / ar</dt>    <dd><span id="p-cs">-</span> / <span id="p-ar">-</span></dd>
           <dt>combo</dt>      <dd><em id="p-combo">0</em>x</dd>
           <dt>elapsed</dt>    <dd id="p-time">0:00 / 0:00</dd>
         </dl>

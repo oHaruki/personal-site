@@ -1,5 +1,5 @@
 /* =========================================================
-   THEME TOKENS — Tokyo Night
+   THEME TOKENS - Tokyo Night
    The palette is the same one the YASB bar uses. Its red is
    effectively the osu! pink, just desaturated.
    Light variant is Tokyo Night Day, below.
@@ -69,7 +69,7 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--fg);
-  /* mono is the UI face here — this is a status-bar aesthetic.
+  /* mono is the UI face here - this is a status-bar aesthetic.
      Inter is used only for the one paragraph of real prose. */
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 15px;
@@ -89,7 +89,7 @@ svg { display: block; flex: none; }
 /* =========================================================
    PLAYFIELD
    Fixed and full-bleed, but the renderer only paints inside
-   #pf-zone. Dimmed by a FLAT scrim — no gradient anywhere on
+   #pf-zone. Dimmed by a FLAT scrim - no gradient anywhere on
    this page, because a near-black gradient bands badly.
    ========================================================= */
 #playfield { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; }
@@ -162,7 +162,7 @@ svg { display: block; flex: none; }
 :root[data-theme="light"] .icon-moon { display: none; }
 
 /* =========================================================
-   DESK — two widget columns
+   DESK - two widget columns
    ========================================================= */
 .desk {
   position: relative; z-index: 10;
@@ -176,12 +176,12 @@ svg { display: block; flex: none; }
 }
 .col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 
-/* Reserved space the playfield canvas draws into. Capped height —
+/* Reserved space the playfield canvas draws into. Capped height -
    as flex:1 it would stretch to match the taller column. */
 .pfzone { flex: none; height: clamp(240px, 36vh, 350px); }
 
 /* =========================================================
-   PANELS — a bar chip, scaled up
+   PANELS - a bar chip, scaled up
    ========================================================= */
 .panel {
   background: var(--panel-bg);

@@ -1,6 +1,6 @@
 # byharuki.dev
 
-A tiny, no-framework personal site. Styled after a **YASB status bar** — a fixed
+A tiny, no-framework personal site. Styled after a **YASB status bar** - a fixed
 widget bar, panels built from the same grammar, and a real beatmap replaying
 beside them. Palette is [Tokyo Night](https://github.com/folke/tokyonight.nvim)
 (with a Tokyo Night Day light variant).
@@ -17,7 +17,7 @@ beside them. Palette is [Tokyo Night](https://github.com/folke/tokyonight.nvim)
 
 Double-click `index.html`, or `npx serve` / `python -m http.server` in this folder.
 
-Add `?t=<seconds>` to jump the replay to a given point — handy when checking a
+Add `?t=<seconds>` to jump the replay to a given point - handy when checking a
 change without waiting: `index.html?t=95`.
 
 ---
@@ -25,7 +25,7 @@ change without waiting: `index.html?t=95`.
 ## How the layout works
 
 Two columns of panels. The playfield canvas is **fixed and full-bleed**, but it
-only *paints* inside the reserved `#pf-zone` box in the left column — that's why
+only *paints* inside the reserved `#pf-zone` box in the left column - that's why
 the replay never ends up underneath text. Move or resize `.pfzone` in
 `styles.css` and the renderer follows it automatically.
 
@@ -37,7 +37,7 @@ A few things worth knowing before editing:
 - **Mono is the UI face.** `Inter` is used for exactly one thing: the `about`
   paragraph, because a block of prose in monospace is hard to read.
 - **Every number is derived.** Object count, slider count, CS and AR are all
-  computed from `map.js` at runtime — CS/AR by inverting the formulas in
+  computed from `map.js` at runtime - CS/AR by inverting the formulas in
   `tools/convert.js`. Swap the map and the whole page updates itself.
 - **Combo is an accumulator.** `map.js` stores the number printed *on* each
   circle, which resets at every new-combo marker; the counter tallies objects
@@ -60,10 +60,10 @@ The footer credit, the bar's map widget and the `fetch` panel all read from
 
 Everything is marked with `<!-- comments -->` in `index.html`:
 
-- **Name / tagline** — the `.who` block in the right column.
-- **about / tools / links** — the `<section class="panel">` blocks.
-- **Bar widgets** — the `.w` chips in `<header class="bar">`.
-- **fetch panel** — the `.nf__kv` list; `renderer` and `theme` are static, the
+- **Name / tagline** - the `.who` block in the right column.
+- **about / tools / links** - the `<section class="panel">` blocks.
+- **Bar widgets** - the `.w` chips in `<header class="bar">`.
+- **fetch panel** - the `.nf__kv` list; `renderer` and `theme` are static, the
   rest come from `map.js` or the browser.
 
 To change the accent, edit `--red` under **THEME TOKENS** (there's a dark and a

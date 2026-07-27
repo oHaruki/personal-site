@@ -1,6 +1,6 @@
 /* =========================================================
    Shared helpers + facts derived from map.js.
-   Nothing about the map is hardcoded — swap map.js and every
+   Nothing about the map is hardcoded - swap map.js and every
    number on the page follows.
    ========================================================= */
 const SET = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
@@ -30,7 +30,7 @@ const FMT = ms => Math.floor(ms / 60000) + ':' + String(Math.floor(ms / 1000) % 
 })();
 
 /* ---------------------------------------------------------
-   Clock widget — real local time
+   Clock widget - real local time
    --------------------------------------------------------- */
 (function () {
   const el = document.getElementById('k-clock');
@@ -151,7 +151,7 @@ const FMT = ms => Math.floor(ms / 60000) + ':' + String(Math.floor(ms / 1000) % 
   SET('k-cs', 'CS ' + CS.toFixed(1));
   SET('k-ar', 'AR ' + AR.toFixed(1));
   SET('k-now', MAP.title);
-  SET('p-title', MAP.artist + ' — ' + MAP.title);
+  SET('p-title', MAP.artist + ' - ' + MAP.title);
   SET('p-diff', '[' + MAP.version + ']');
   SET('p-creator', MAP.creator);
   SET('p-cs', CS.toFixed(1));
@@ -409,7 +409,7 @@ const FMT = ms => Math.floor(ms / 60000) + ':' + String(Math.floor(ms / 1000) % 
     ctx.clearRect(0, 0, W, H);
 
     // Advance past finished objects, then find how far ahead is visible.
-    // combo is an accumulator, NOT o.n — o.n is the number printed on the
+    // combo is an accumulator, NOT o.n - o.n is the number printed on the
     // circle, which resets at every new-combo marker. The hitCycle guard
     // stops the two passes from double-counting.
     while (wp < objs.length && objs[wp].t + objs[wp].dur + CONFIG.pop < mt) {
@@ -451,7 +451,7 @@ const FMT = ms => Math.floor(ms / 60000) + ':' + String(Math.floor(ms / 1000) % 
     ctx.beginPath(); ctx.arc(pos.x, pos.y, 5, 0, 7); ctx.fill();
     ctx.globalAlpha = 1;
 
-    // HUD throttled to ~10fps — no need to touch the DOM every frame
+    // HUD throttled to ~10fps - no need to touch the DOM every frame
     if (now - hudTick > 100) {
       hudTick = now;
       SET('k-combo', combo.toLocaleString());
