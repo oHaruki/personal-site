@@ -1,246 +1,319 @@
 /* =========================================================
-   THEME TOKENS
-   Edit these to re-skin the whole site. Dark is the default;
-   [data-theme="light"] overrides below.
+   THEME TOKENS — Tokyo Night
+   The palette is the same one the YASB bar uses. Its red is
+   effectively the osu! pink, just desaturated.
+   Light variant is Tokyo Night Day, below.
    ========================================================= */
 :root,
 :root[data-theme="dark"] {
-  --bg:        #0d0d10;
-  --bg-soft:   #16161b;
-  --text:      #ececf0;
-  --text-dim:  #8b8b97;
-  --line:      #26262e;
-  --accent:    #ff5c8a;   /* your one accent colour (tweak freely) */
-  --accent-dim:#ff5c8a22;
+  --bg:        #16161e;   /* desktop */
+  --chip:      #1a1b26;   /* widget body */
+  --chip-2:    #1f2030;   /* hover */
+  --line:      #292e42;   /* borders */
+  --fg:        #c0caf5;
+  --fg-2:      #a9b1d6;
+  --dim:       #565f89;   /* comment grey: labels, units */
+
+  --red:       #f7768e;   /* accent */
+  --orange:    #ff9e64;
+  --yellow:    #e0af68;
+  --green:     #9ece6a;
+  --cyan:      #7dcfff;
+  --blue:      #7aa2f7;
+  --magenta:   #bb9af7;
+
+  --panel-bg:  rgba(26, 27, 38, .86);
+  --bar-bg:    rgba(26, 27, 38, .92);
+  --soft-bg:   rgba(31, 32, 48, .5);
+  --scrim:     rgba(22, 22, 30, .34);
+  --track:     #20222f;
+  --accent-soft: rgba(247, 118, 142, .12);
+  --accent-line: rgba(247, 118, 142, .45);
+
+  --bar-h: 46px;
 }
 
 :root[data-theme="light"] {
-  --bg:        #faf9f7;
-  --bg-soft:   #ffffff;
-  --text:      #16161a;
-  --text-dim:  #6a6a72;
-  --line:      #e6e4df;
-  --accent:    #e23c6d;
-  --accent-dim:#e23c6d18;
+  --bg:        #d9dbe4;
+  --chip:      #ebedf2;
+  --chip-2:    #dfe2eb;
+  --line:      #c3c8d6;
+  --fg:        #2f3549;
+  --fg-2:      #4b5171;
+  --dim:       #8990b3;
+
+  --red:       #f52a65;
+  --orange:    #b15c00;
+  --yellow:    #8c6c3e;
+  --green:     #587539;
+  --cyan:      #007197;
+  --blue:      #2e7de9;
+  --magenta:   #9854f1;
+
+  --panel-bg:  rgba(235, 237, 242, .88);
+  --bar-bg:    rgba(235, 237, 242, .93);
+  --soft-bg:   rgba(223, 226, 235, .6);
+  --scrim:     rgba(217, 219, 228, .52);
+  --track:     #cdd1de;
+  --accent-soft: rgba(245, 42, 101, .12);
+  --accent-line: rgba(245, 42, 101, .45);
 }
 
 /* =========================================================
    RESET / BASE
    ========================================================= */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: 16px;
+  color: var(--fg);
+  /* mono is the UI face here — this is a status-bar aesthetic.
+     Inter is used only for the one paragraph of real prose. */
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 15px;
   line-height: 1.6;
+  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
-  transition: background .3s ease, color .3s ease;
+  min-height: 100vh;
+  transition: background .25s ease, color .25s ease;
 }
 
 a { color: inherit; text-decoration: none; }
+svg { display: block; flex: none; }
+::selection { background: var(--red); color: var(--bg); }
 
-::selection { background: var(--accent); color: #fff; }
-
-/* =========================================================
-   PAGE LAYOUT
-   Two columns that fill the width and the full viewport height,
-   vertically centred so everything is visible without scrolling.
-   ========================================================= */
-.page {
-  position: relative;
-  z-index: 1;              /* sits above the playfield canvas */
-  min-height: 100vh;
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 6vw, 4.5rem);
-  display: grid;
-  grid-template-columns: minmax(240px, 0.85fr) minmax(0, 1.15fr);
-  gap: clamp(2.5rem, 7vw, 7rem);
-  align-content: center;   /* centre the whole block vertically */
-  align-items: center;     /* centre the left column against the right */
-}
-
-/* osu!-style playfield animation living behind the left column */
-#playfield {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
+:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; border-radius: 6px; }
 
 /* =========================================================
-   LEFT: IDENTITY
+   PLAYFIELD
+   Fixed and full-bleed, but the renderer only paints inside
+   #pf-zone. Dimmed by a FLAT scrim — no gradient anywhere on
+   this page, because a near-black gradient bands badly.
    ========================================================= */
-.wordmark {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-size: clamp(2.75rem, 7vw, 4.5rem);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  color: var(--text);
-}
-/* If you swap the wordmark for an image, this keeps it sized nicely */
-.wordmark img { display: block; height: clamp(2.5rem, 6vw, 4rem); width: auto; }
-
-.side__meta {
-  margin-top: 1rem;
-  color: var(--text-dim);
-  font-size: 0.95rem;
-}
-
-.socials {
-  display: flex;
-  gap: 0.35rem;
-  margin: 1.5rem 0 0 -0.5rem;   /* pull left so icons align with the wordmark edge */
-}
-.socials a {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  color: var(--text-dim);
-  transition: color .2s ease, background .2s ease, transform .2s ease;
-}
-.socials a:hover {
-  color: var(--accent);
-  background: var(--accent-dim);
-  transform: translateY(-2px);
-}
-
-.side__footer {
-  margin-top: 2.25rem;
-  color: var(--text-dim);
-  font-size: 0.85rem;
-}
-.side__map {
-  display: block;
-  margin-top: 0.3rem;
-  font-size: 0.72rem;
-  opacity: 0.75;
-}
-.side__map a { transition: color .2s ease; }
-.side__map a:hover { color: var(--accent); }
+#playfield { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; }
+.scrim     { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: var(--scrim); }
 
 /* =========================================================
-   THEME TOGGLE (floats top-right)
+   STATUS BAR
    ========================================================= */
-.theme-toggle {
-  position: fixed;
-  top: clamp(1rem, 3vh, 1.75rem);
-  right: clamp(1rem, 3vw, 1.75rem);
-  z-index: 10;
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--bg);
-  color: var(--text-dim);
-  cursor: pointer;
-  transition: color .2s ease, border-color .2s ease;
+.bar {
+  position: fixed; top: 0; left: 0; right: 0; height: var(--bar-h); z-index: 50;
+  display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+  padding: 0 12px;
+  background: var(--bar-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
 }
-.theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.bar__side { display: flex; align-items: center; gap: 5px; min-width: 0; }
 
+/* a widget chip */
+.w {
+  display: flex; align-items: center; gap: 7px;
+  height: 32px; padding: 0 11px; border-radius: 7px;
+  color: var(--fg-2); white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background .14s ease, border-color .14s ease, color .14s ease;
+}
+.w:hover { background: var(--chip-2); border-color: var(--line); }
+.w b  { font-weight: 500; color: var(--fg); }
+.w .u { color: var(--dim); }
+
+.w--brand { color: var(--fg); font-weight: 700; letter-spacing: -.01em; }
+.w--brand svg { color: var(--red); }
+
+/* workspace pills double as section nav */
+.ws { display: flex; align-items: center; gap: 3px; padding: 0 5px; }
+.ws a, .ws .face {
+  min-width: 28px; height: 28px; padding: 0 8px; border-radius: 6px;
+  display: grid; place-items: center; color: var(--dim);
+  transition: color .14s ease, background .14s ease;
+}
+.ws a:hover { color: var(--fg); background: var(--chip-2); }
+.ws a.on    { color: var(--red); background: var(--accent-soft); }
+.ws .face   { color: var(--yellow); letter-spacing: -.05em; }
+
+.sep { width: 1px; height: 18px; background: var(--line); margin: 0 4px; flex: none; }
+
+/* per-widget accent hues, like the bar this is modelled on */
+.w--dash { border: 1px dashed var(--accent-line); }
+.w--dash svg, .w--dash b { color: var(--red); }
+.w--mem svg   { color: var(--magenta); }
+.w--net svg   { color: var(--green); }
+.w--map svg   { color: var(--cyan); }
+.w--clock svg { color: var(--blue); }
+.w--now b     { color: var(--red); }
+
+.media { display: flex; align-items: center; gap: 2px; }
+.media button {
+  background: none; border: 0; color: var(--dim); cursor: pointer;
+  width: 27px; height: 27px; display: grid; place-items: center;
+  border-radius: 6px; transition: color .14s ease, background .14s ease;
+}
+.media button:hover { color: var(--fg); background: var(--chip-2); }
+.media button.on    { color: var(--red); }
+
+.w--theme { background: none; border: 1px solid transparent; cursor: pointer; font: inherit; }
 .icon-sun  { display: none; }
 .icon-moon { display: block; }
 :root[data-theme="light"] .icon-sun  { display: block; }
 :root[data-theme="light"] .icon-moon { display: none; }
 
 /* =========================================================
-   RIGHT: CONTENT
+   DESK — two widget columns
    ========================================================= */
-.content { width: 100%; }
-
-.section {
+.desk {
+  position: relative; z-index: 10;
+  padding: calc(var(--bar-h) + 26px) 26px 40px;
+  max-width: 1500px; margin: 0 auto;
   display: grid;
-  grid-template-columns: 78px 1fr;
-  gap: 1.25rem;
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--line);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 660px);
+  gap: 20px;
+  align-content: start;
+  min-height: 100vh;
 }
-.section:first-child { border-top: none; padding-top: 0; }
-.section:last-child  { padding-bottom: 0; }
+.col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 
-.section__label {
-  color: var(--text-dim);
-  font-size: 0.9rem;
-  padding-top: 0.15rem;
-}
-.section__slash {
-  color: var(--accent);
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  margin-right: 0.1em;
-}
-
-.section__body p { color: var(--text); }
-/* Inline text links only: quiet grey underline that warms up on hover.
-   (Scoped to "p a" so list items never get underlined.) */
-.section__body p a {
-  color: var(--text);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-decoration-color: var(--text-dim);
-  text-underline-offset: 3px;
-  transition: color .2s ease, text-decoration-color .2s ease;
-}
-.section__body p a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+/* Reserved space the playfield canvas draws into. Capped height —
+   as flex:1 it would stretch to match the taller column. */
+.pfzone { flex: none; height: clamp(240px, 36vh, 350px); }
 
 /* =========================================================
-   LISTS (tools + links)
+   PANELS — a bar chip, scaled up
    ========================================================= */
-.list { list-style: none; display: flex; flex-direction: column; }
-
-.list__link {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  padding: 0.55rem 0.75rem;
-  margin: 0 -0.75rem;
-  border-radius: 10px;
-  transition: background .2s ease, transform .15s ease;
+.panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
 }
-.list__link:hover { background: var(--bg-soft); transform: translateX(3px); }
-
-.list__title { font-weight: 600; }
-.list__desc  { color: var(--text-dim); font-size: 0.88rem; }
-
-/* Links variant: title + arrow on one row */
-.list--links .list__link {
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+.panel__h {
+  display: flex; align-items: center; gap: 9px;
+  padding-bottom: 12px; margin-bottom: 15px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px; color: var(--dim);
 }
-.list__arrow { color: var(--text-dim); transition: color .2s ease, transform .2s ease; }
-.list--links .list__link:hover .list__arrow {
-  color: var(--accent);
-  transform: translate(2px, -2px);
+.panel__h .t { color: var(--fg-2); font-weight: 500; }
+.panel__h .r { margin-left: auto; color: var(--dim); font-size: 12px; }
+
+/* the only real prose on the page gets a readable face */
+.prose {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 15.5px; line-height: 1.72; color: var(--fg-2);
 }
+.prose a {
+  color: var(--fg);
+  border-bottom: 1px solid var(--dim);
+  transition: color .16s ease, border-color .16s ease;
+}
+.prose a:hover { color: var(--red); border-bottom-color: var(--red); }
+
+/* =========================================================
+   IDENTITY
+   ========================================================= */
+.who { display: flex; align-items: center; gap: 16px; }
+.who__av {
+  width: 60px; height: 60px; border-radius: 13px; flex: none;
+  border: 1px solid var(--line); background: var(--chip-2);
+  display: grid; place-items: center; color: var(--red);
+}
+.who__n { font-size: 29px; font-weight: 700; color: var(--fg); letter-spacing: -.025em; line-height: 1.15; }
+.who__m { font-size: 13px; color: var(--dim); }
+
+/* =========================================================
+   LIST ROWS
+   ========================================================= */
+.row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 11px; margin: 0 -11px; border-radius: 8px;
+  transition: background .14s ease;
+}
+.row:hover { background: var(--chip-2); }
+.row__i { width: 20px; display: grid; place-items: center; color: var(--dim); }
+.row:nth-of-type(1) .row__i { color: var(--magenta); }
+.row:nth-of-type(2) .row__i { color: var(--red); }
+.row:nth-of-type(3) .row__i { color: var(--cyan); }
+.row__m { min-width: 0; flex: 1; }
+/* both must be block or the title and description run together */
+.row__t { display: block; font-size: 15px; color: var(--fg); font-weight: 500; line-height: 1.35; }
+.row__d { display: block; font-size: 13px; color: var(--dim); line-height: 1.45;
+          white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row__k { font-size: 12px; color: var(--dim); opacity: 0; transition: opacity .14s ease; }
+.row:hover .row__k { opacity: 1; color: var(--fg-2); }
+
+/* =========================================================
+   TELEMETRY
+   ========================================================= */
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 13.5px; }
+.kv dt { color: var(--dim); }
+.kv dd { color: var(--fg-2); text-align: right; }
+.kv dd em { font-style: normal; color: var(--red); }
+
+.meter { height: 4px; background: var(--track); border-radius: 2px; overflow: hidden; margin-top: 15px; }
+.meter i { display: block; height: 100%; background: var(--red); width: 0; border-radius: 2px; }
+
+/* =========================================================
+   FETCH PANEL (neofetch-style)
+   ========================================================= */
+.nf { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+.nf__art {
+  font-family: inherit;
+  font-size: 11px; line-height: 1.15; color: var(--red);
+  white-space: pre;
+}
+.nf__body { min-width: 0; flex: 1; }
+.nf__title { font-size: 13px; color: var(--fg); margin-bottom: 6px; }
+.nf__title b { color: var(--red); font-weight: 500; }
+.nf__rule { height: 1px; background: var(--line); margin: 8px 0; }
+.nf__kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 12.5px; min-width: 0; }
+.nf__kv dt { color: var(--red); }
+.nf__kv dd { color: var(--fg-2); word-break: break-word; }
+.nf__pal { display: flex; gap: 4px; margin-top: 12px; }
+.nf__pal i { width: 20px; height: 11px; border-radius: 2px; }
+
+/* =========================================================
+   LINKS / FOOTER
+   ========================================================= */
+.soc { display: flex; gap: 7px; flex-wrap: wrap; }
+.soc a {
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 14px; border-radius: 9px;
+  border: 1px solid var(--line); background: var(--soft-bg);
+  font-size: 13.5px; color: var(--fg-2);
+  transition: background .14s ease, color .14s ease, border-color .14s ease;
+}
+.soc a:hover { background: var(--chip-2); color: var(--fg); border-color: var(--dim); }
+.soc a:nth-child(1) svg { color: var(--red); }
+.soc a:nth-child(3) svg { color: var(--orange); }
+.soc a:nth-child(4) svg { color: var(--magenta); }
+
+.foot { margin-top: 14px; font-size: 11.5px; color: var(--dim); }
+.foot a { border-bottom: 1px solid transparent; }
+.foot a:hover { color: var(--red); border-bottom-color: var(--red); }
 
 /* =========================================================
    RESPONSIVE
    ========================================================= */
-/* Stack to a single column on narrow screens (scrolling is fine here) */
-@media (max-width: 760px) {
-  .page {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    align-content: start;
-    min-height: 0;
-    padding-top: clamp(4rem, 12vh, 6rem);
-  }
-  #playfield { display: none; }   /* skip the animation on phones */
+@media (max-width: 1150px) {
+  .desk { grid-template-columns: 1fr; padding-left: 16px; padding-right: 16px; }
+  .scrim { background: var(--scrim); }
+  .pfzone { height: clamp(220px, 32vh, 300px); }
+}
+@media (max-width: 880px) {
+  .ws { display: none; }
+  .w--mem, .w--net { display: none; }
+}
+@media (max-width: 560px) {
+  .w--dash, .w--map, .w--now { display: none; }
+  .who__n { font-size: 25px; }
+  .panel { padding: 16px; }
+  .nf__art { display: none; }   /* the art crowds a phone */
 }
 
-@media (max-width: 460px) {
-  .section { grid-template-columns: 1fr; gap: 0.4rem; }
-}
-
-/* Respect users who prefer no motion */
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
+  html { scroll-behavior: auto; }
 }
