@@ -72,18 +72,110 @@ const FMT = ms => Math.floor(ms / 60000) + ':' + String(Math.floor(ms / 1000) % 
 })();
 
 /* ---------------------------------------------------------
-   Fetch panel: live display size + time on page
+   Copy the Discord username, with a toast as confirmation
+   --------------------------------------------------------- */
+(function () {
+  const toast = document.getElementById('toast');
+  let hide;
+  const say = msg => {
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(hide);
+    hide = setTimeout(() => toast.classList.remove('show'), 2200);
+  };
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    const label = btn.querySelector('.btn__copy, .dc__copy');
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copy;
+      try {
+        await navigator.clipboard.writeText(text);
+        say('Copied "' + text + '". Add me on Discord.');
+        btn.classList.add('is-copied');
+        if (label) label.textContent = 'copied';
+        setTimeout(() => {
+          btn.classList.remove('is-copied');
+          if (label) label.textContent = 'copy';
+        }, 2200);
+      } catch {
+        say('Discord username: ' + text);
+      }
+    });
+  });
+})();
+
+/* ---------------------------------------------------------
+   Screenshots: thumbs swap a project's main shot, any main
+   shot opens the lightbox
+   --------------------------------------------------------- */
+(function () {
+  const lb = document.getElementById('lb');
+  const lbImg = document.getElementById('lb-img');
+  const lbCap = document.getElementById('lb-cap');
+
+  document.querySelectorAll('.gal').forEach(gal => {
+    const main = gal.querySelector('.gal__main');
+    const img = main.querySelector('img');
+    const thumbs = gal.querySelectorAll('.gal__thumbs button');
+    thumbs.forEach(t => t.addEventListener('click', () => {
+      if (t.classList.contains('on')) return;
+      thumbs.forEach(x => x.classList.remove('on'));
+      t.classList.add('on');
+      main.classList.add('is-swap');
+      setTimeout(() => {
+        img.src = t.dataset.src;
+        img.alt = t.dataset.alt;
+        img.width = +t.dataset.w;
+        img.height = +t.dataset.h;
+        img.decode().catch(() => {}).finally(() => main.classList.remove('is-swap'));
+      }, 160);
+    }));
+  });
+
+  if (!lb || typeof lb.showModal !== 'function') return;
+  document.querySelectorAll('.gal__main, .shot').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const img = btn.querySelector('img');
+      lbImg.src = img.currentSrc || img.src;
+      lbImg.alt = img.alt;
+      lbCap.textContent = img.alt;
+      lb.showModal();
+    });
+  });
+  // clicking anywhere (image or backdrop) closes it
+  lb.addEventListener('click', () => lb.close());
+})();
+
+/* ---------------------------------------------------------
+   Panels fade in as they scroll into view
+   --------------------------------------------------------- */
+(function () {
+  const items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(el => el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  items.forEach(el => io.observe(el));
+})();
+
+/* ---------------------------------------------------------
+   Fetch panel: time on page
    --------------------------------------------------------- */
 (function () {
   const t0 = Date.now();
   const upd = () => {
-    SET('nf-disp', window.innerWidth + 'x' + window.innerHeight);
     const s = Math.floor((Date.now() - t0) / 1000);
     SET('nf-up', s < 60 ? s + 's' : Math.floor(s / 60) + 'm ' + (s % 60) + 's');
   };
   upd();
   setInterval(upd, 1000);
-  window.addEventListener('resize', upd);
 })();
 
 /* =========================================================
@@ -148,14 +240,7 @@ const FMT = ms => Math.floor(ms / 60000) + ':' + String(Math.floor(ms / 1000) % 
   const MAPURL = 'https://osu.ppy.sh/b/' + MAP.id;
 
   SET('k-obj', MAP.objects.length.toLocaleString());
-  SET('k-cs', 'CS ' + CS.toFixed(1));
-  SET('k-ar', 'AR ' + AR.toFixed(1));
   SET('k-now', MAP.title);
-  SET('p-title', MAP.artist + ' - ' + MAP.title);
-  SET('p-diff', '[' + MAP.version + ']');
-  SET('p-creator', MAP.creator);
-  SET('p-cs', CS.toFixed(1));
-  SET('p-ar', AR.toFixed(1));
   SET('nf-map', MAP.title + ' [' + MAP.version + ']');
   SET('nf-mapper', MAP.creator);
   SET('nf-obj', MAP.objects.length.toLocaleString() + ' (' + SLIDERS.toLocaleString() + ' sliders)');
@@ -455,9 +540,7 @@ const FMT = ms => Math.floor(ms / 60000) + ':' + String(Math.floor(ms / 1000) % 
     if (now - hudTick > 100) {
       hudTick = now;
       SET('k-combo', combo.toLocaleString());
-      SET('p-combo', combo.toLocaleString());
       SET('k-time', FMT(mt));
-      SET('p-time', FMT(mt) + ' / ' + FMT(MAP.total));
       if (bar) bar.style.width = (mt / MAP.total * 100) + '%';
     }
   }

@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>haruki</title>
-  <meta name="description" content="osu! tournament organizer and developer. AimCup, UmaCore and other things." />
+  <meta name="description" content="osu! tournament organizer and developer. Tournament websites, mappool tools, Discord bots. Commissions open, contact me on Discord: Haruki." />
   <meta name="theme-color" content="#16161e" />
 
   <!-- Social preview -->
   <meta property="og:title" content="haruki" />
-  <meta property="og:description" content="osu! tournament organizer and developer. AimCup, UmaCore and other things." />
+  <meta property="og:description" content="osu! tournament organizer and developer. Tournament websites, mappool tools, Discord bots. Commissions open." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://byharuki.dev/" />
   <meta property="og:image" content="https://byharuki.dev/assets/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="haruki" />
-  <meta name="twitter:description" content="osu! tournament organizer and developer." />
+  <meta name="twitter:description" content="osu! tournament organizer and developer. Commissions open." />
   <meta name="twitter:image" content="https://byharuki.dev/assets/og.png" />
 
   <!-- Inline SVG favicon: an osu! hit circle, no extra request -->
@@ -23,7 +23,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -33,8 +33,11 @@
     (function () {
       var saved = localStorage.getItem('theme');
       if (saved) document.documentElement.setAttribute('data-theme', saved);
+      document.documentElement.classList.add('js');
     })();
   </script>
+
+  <a class="skip" href="#work">Skip to content</a>
 
   <!-- The beatmap replay. Fixed and full-bleed, but it only DRAWS inside
        #pf-zone below - see the renderer in script.js. -->
@@ -44,16 +47,16 @@
   <!-- ============================ STATUS BAR ============================ -->
   <header class="bar">
     <div class="bar__side">
-      <span class="w w--brand">
+      <a class="w w--brand" href="#home">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
         haruki
-      </span>
+      </a>
 
       <nav class="ws" aria-label="Sections">
-        <a href="#about" class="on">1</a>
-        <a href="#tools">2</a>
-        <a href="#links">3</a>
-        <span class="face" title="hi">;-)</span>
+        <a href="#home" class="on"><i>1</i>home</a>
+        <a href="#work"><i>2</i>work</a>
+        <a href="#hire"><i>3</i>hire</a>
+        <a href="#contact"><i>4</i>contact</a>
       </nav>
 
       <span class="sep"></span>
@@ -61,11 +64,6 @@
       <span class="w w--dash" title="hit objects in the loaded map">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>
         <b id="k-obj">-</b>
-      </span>
-
-      <span class="w w--mem" title="circle size / approach rate">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="10" rx="1.5"/><path d="M6 11v2M10 11v2M14 11v2M18 11v2"/></svg>
-        <b id="k-cs">CS -</b><span class="u">/</span><b id="k-ar">AR -</b>
       </span>
 
       <span class="w w--net" title="current combo in the replay">
@@ -90,6 +88,10 @@
 
       <span class="sep"></span>
 
+      <a class="w w--open" href="#hire" title="Commissions are open">
+        <span class="dot" aria-hidden="true"></span> commissions open
+      </a>
+
       <span class="w w--clock">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
         <b id="k-clock">--:--</b>
@@ -102,21 +104,47 @@
     </div>
   </header>
 
-  <!-- ============================== DESK ============================== -->
-  <main class="desk">
+  <main>
 
-    <!-- ---------- LEFT: playfield + fetch ---------- -->
-    <div class="col">
-      <!-- Reserved space. The fixed canvas above draws into exactly this box. -->
-      <div class="pfzone" id="pf-zone"></div>
-
-      <section class="panel">
-        <div class="panel__h">
-          <span class="t">fetch</span>
-          <span class="r">~/haruki</span>
+    <!-- ============================== HOME ============================== -->
+    <section class="hero wrap" id="home">
+      <div class="hero__copy">
+        <p class="eyebrow">~/haruki <span>· tournament organizer &amp; developer</span></p>
+        <h1 class="hero__h">haruki</h1>
+        <p class="hero__lead">
+          I run <a href="https://aimcup.xyz/" target="_blank" rel="noopener">AimCup</a>, an osu! relax tournament
+          series, and build the tools around it: mappool planners, stats sites and Discord bots. Outside osu! I
+          make things for Uma Musume players, like <a href="https://umacore.app/" target="_blank" rel="noopener">UmaCore</a>
+          and <a href="https://umastudio.byharuki.dev/" target="_blank" rel="noopener">UmaStudio</a>.
+        </p>
+        <p class="hero__lead hero__lead--sub">
+          I also take commissions. If your tournament needs a website or a better way to run its mappool,
+          I can build it.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--main" href="#hire">
+            See what I can build
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <button type="button" class="btn btn--dc" data-copy="Haruki" aria-label="Copy Discord username Haruki">
+            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.3 5.3A16.6 16.6 0 0 0 15.2 4l-.5 1a15.4 15.4 0 0 0-5.4 0l-.5-1a16.5 16.5 0 0 0-4.1 1.3C2.1 9.2 1.4 13 1.7 16.7A16.7 16.7 0 0 0 6.8 19.3l1.1-1.7a10.7 10.7 0 0 1-1.7-.8l.4-.3a11.9 11.9 0 0 0 10.8 0l.4.3a10.7 10.7 0 0 1-1.7.8l1.1 1.7a16.6 16.6 0 0 0 5.1-2.6c.4-4.3-.7-8-3-11.4zM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/></svg>
+            <span class="btn__k">Discord</span> <b>Haruki</b>
+            <span class="btn__copy" aria-hidden="true">copy</span>
+          </button>
         </div>
-        <div class="nf">
-          <pre class="nf__art" aria-hidden="true">    ▄▄████▄▄
+      </div>
+
+      <div class="hero__side">
+        <!-- Reserved space. The fixed canvas above draws into exactly this box. -->
+        <div class="pfzone" id="pf-zone"></div>
+
+        <section class="panel panel--fetch" aria-label="Now replaying">
+          <div class="panel__h">
+            <span class="t">fetch</span>
+            <span class="r">~/haruki</span>
+          </div>
+          <div class="nf">
+            <pre class="nf__art" aria-hidden="true">    ▄▄████▄▄
   ▄██▀    ▀██▄
  ██▀  ▄██▄  ▀██
 ██   ██████   ██
@@ -124,111 +152,314 @@
  ██▄  ▀▀▀▀  ▄██
   ▀██▄    ▄██▀
     ▀▀████▀▀</pre>
-          <div class="nf__body">
-            <div class="nf__title"><b>haruki</b>@<b>byharuki.dev</b></div>
-            <div class="nf__rule"></div>
-            <dl class="nf__kv">
-              <dt>map</dt>      <dd id="nf-map">-</dd>
-              <dt>mapper</dt>   <dd id="nf-mapper">-</dd>
-              <dt>objects</dt>  <dd id="nf-obj">-</dd>
-              <dt>cs / ar</dt>  <dd id="nf-diff">-</dd>
-              <dt>loop</dt>     <dd id="nf-loop">-</dd>
-              <dt>renderer</dt> <dd>canvas2d</dd>
-              <dt>theme</dt>    <dd id="nf-theme">tokyo night</dd>
-              <dt>display</dt>  <dd id="nf-disp">-</dd>
-              <dt>uptime</dt>   <dd id="nf-up">-</dd>
-            </dl>
-            <div class="nf__pal" aria-hidden="true">
-              <i style="background:var(--red)"></i><i style="background:var(--orange)"></i>
-              <i style="background:var(--yellow)"></i><i style="background:var(--green)"></i>
-              <i style="background:var(--cyan)"></i><i style="background:var(--blue)"></i>
-              <i style="background:var(--magenta)"></i><i style="background:var(--fg)"></i>
+            <div class="nf__body">
+              <div class="nf__title"><b>haruki</b>@<b>byharuki.dev</b></div>
+              <div class="nf__rule"></div>
+              <dl class="nf__kv">
+                <dt>map</dt>      <dd id="nf-map">-</dd>
+                <dt>mapper</dt>   <dd id="nf-mapper">-</dd>
+                <dt>objects</dt>  <dd id="nf-obj">-</dd>
+                <dt>cs / ar</dt>  <dd id="nf-diff">-</dd>
+                <dt>loop</dt>     <dd id="nf-loop">-</dd>
+                <dt>theme</dt>    <dd id="nf-theme">tokyo night</dd>
+                <dt>uptime</dt>   <dd id="nf-up">-</dd>
+              </dl>
+              <div class="meter"><i id="p-bar"></i></div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </section>
 
-    <!-- ---------- RIGHT: the content ---------- -->
-    <div class="col">
-      <section class="panel">
-        <div class="who">
-          <div class="who__av">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg>
+    <!-- ============================== WORK ============================== -->
+    <section class="sec wrap" id="work">
+      <header class="sec__h">
+        <p class="eyebrow"><i>2</i> work</p>
+        <h2>Things I've built</h2>
+        <p class="sec__lead">All of these are in use today. Click a screenshot to see it full size.</p>
+      </header>
+
+      <!-- One .proj per project. Thumbnails swap the main shot; the main shot opens the lightbox. -->
+      <article class="proj reveal">
+        <div class="proj__media gal">
+          <button type="button" class="gal__main" aria-label="Open screenshot full size">
+            <img src="assets/work/umastudio-render.webp" width="1600" height="900" loading="lazy" decoding="async"
+                 alt="UmaStudio render: Kitasan Black on a flower field background holding a box with a custom Spring Cup 2026 badge" />
+          </button>
+          <div class="gal__thumbs">
+            <button type="button" class="on" data-src="assets/work/umastudio-render.webp" data-w="1600" data-h="900"
+                    data-alt="UmaStudio render: Kitasan Black on a flower field background holding a box with a custom Spring Cup 2026 badge"><img src="assets/work/umastudio-render.webp" alt="" loading="lazy" /></button>
+            <button type="button" data-src="assets/work/umastudio-picker.webp" data-w="1600" data-h="950"
+                    data-alt="UmaStudio background picker with a grid of the game's backgrounds"><img src="assets/work/umastudio-picker.webp" alt="" loading="lazy" /></button>
+            <button type="button" data-src="assets/work/umastudio-site.webp" data-w="1600" data-h="1000"
+                    data-alt="The UmaStudio website: Pose any Uma, with Tokai Teio doing a peace sign"><img src="assets/work/umastudio-site.webp" alt="" loading="lazy" /></button>
           </div>
-          <div>
-            <h1 class="who__n">haruki</h1>
-            <p class="who__m">he/him · tournament organizer &amp; dev</p>
+        </div>
+        <div class="proj__body">
+          <p class="proj__k">desktop app · open source · new</p>
+          <h3>UmaStudio</h3>
+          <p class="proj__d">
+            A pose and render tool for Uma Musume. It loads characters straight from your installed game: pick a
+            pose and an expression, give her a prop and a background, then save a PNG, GIF, video or a .glb model.
+          </p>
+          <ul class="proj__pts">
+            <li>90+ Umas and their chibis, 4,000+ poses, 500+ hand props</li>
+            <li>Uses the game's own hair and cloth physics</li>
+            <li>Custom pictures on props, e.g. your tournament's badge on a box</li>
+          </ul>
+          <ul class="tags"><li>Python</li><li>three.js</li><li>WebView2</li></ul>
+          <div class="proj__links">
+            <a class="lnk" href="https://umastudio.byharuki.dev/" target="_blank" rel="noopener">umastudio.byharuki.dev <span aria-hidden="true">↗</span></a>
+            <a class="lnk lnk--dim" href="https://github.com/oHaruki/UmaStudio" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
           </div>
         </div>
-      </section>
+      </article>
 
-      <section class="panel" id="about">
-        <div class="panel__h"><span class="t">about</span><span class="r">~/haruki</span></div>
-        <p class="prose">
-          Hey, I'm haruki. I organize <a href="https://aimcup.xyz/" target="_blank" rel="noopener">AimCup</a> and
-          other osu! tournaments. Besides that I help out or create stuff whenever I feel like it, like
-          <a href="https://umacore.app/" target="_blank" rel="noopener">UmaCore.app</a>.
-        </p>
-      </section>
+      <article class="proj proj--flip reveal">
+        <div class="proj__media gal">
+          <button type="button" class="gal__main" aria-label="Open screenshot full size">
+            <img src="assets/work/pool-claims.webp" width="1600" height="1000" loading="lazy" decoding="async"
+                 alt="Pool Planner map claims board: slots per mod with status, mapper and progress" />
+          </button>
+          <div class="gal__thumbs">
+            <button type="button" class="on" data-src="assets/work/pool-claims.webp" data-w="1600" data-h="1000"
+                    data-alt="Pool Planner map claims board: slots per mod with status, mapper and progress"><img src="assets/work/pool-claims.webp" alt="" loading="lazy" /></button>
+            <button type="button" data-src="assets/work/pool-dashboard.webp" data-w="1600" data-h="1000"
+                    data-alt="Pool Planner dashboard: custom map counts, stage progress bars and recent activity"><img src="assets/work/pool-dashboard.webp" alt="" loading="lazy" /></button>
+            <button type="button" data-src="assets/work/pool-custom.webp" data-w="1600" data-h="1000"
+                    data-alt="Pool Planner custom maps table with slot, song, mapper, status, progress and star rating"><img src="assets/work/pool-custom.webp" alt="" loading="lazy" /></button>
+            <button type="button" data-src="assets/work/pool-pooling.webp" data-w="1600" data-h="1000"
+                    data-alt="Pool Planner pooling page: suggested beatmaps with mod, star rating, BPM, length and skill tags"><img src="assets/work/pool-pooling.webp" alt="" loading="lazy" /></button>
+          </div>
+        </div>
+        <div class="proj__body">
+          <p class="proj__k">web app · private, for tournament staff</p>
+          <h3>AimCup Pool Planner</h3>
+          <p class="proj__d">
+            Replaces the mappool spreadsheets. Mappers claim slots, upload their .osz and tick off a checklist;
+            poolers, QA and playtesters each get their own view of the pool. Shown here with demo data.
+          </p>
+          <ul class="proj__pts">
+            <li>Pool layout per stage, map claims and holds</li>
+            <li>.osz uploads are parsed: BPM, CS, AR, OD come from the file</li>
+            <li>QA board, playtesting, pooling suggestions, exports</li>
+          </ul>
+          <ul class="tags"><li>Next.js</li><li>PostgreSQL</li><li>osu! OAuth</li><li>osu! API v2</li></ul>
+          <div class="proj__links">
+            <a class="lnk" href="#hire-pool">Get one for your tournament <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </article>
 
-      <section class="panel" id="tools">
-        <div class="panel__h"><span class="t">tools</span><span class="r">4 running</span></div>
-        <a class="row" href="https://umacore.app/" target="_blank" rel="noopener">
-          <span class="row__i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8"/></svg></span>
-          <span class="row__m"><span class="row__t">UmaCore</span><span class="row__d">Umamusume tools, dashboard and Discord bot</span></span>
-          <span class="row__k">umacore.app</span>
-        </a>
+      <article class="proj reveal">
+        <div class="proj__media gal">
+          <button type="button" class="gal__main" aria-label="Open screenshot full size">
+            <img src="assets/work/stats-summary.webp" width="1600" height="822" loading="lazy" decoding="async"
+                 alt="Tournament stats summary: teams seeded by zipf with their placement on every map of the stage" />
+          </button>
+          <div class="gal__thumbs">
+            <button type="button" class="on" data-src="assets/work/stats-summary.webp" data-w="1600" data-h="822"
+                    data-alt="Tournament stats summary: teams seeded by zipf with their placement on every map of the stage"><img src="assets/work/stats-summary.webp" alt="" loading="lazy" /></button>
+            <button type="button" data-src="assets/work/stats-mappool.webp" data-w="1600" data-h="1000"
+                    data-alt="Stage mappool with map covers, top plays and pick and ban rates"><img src="assets/work/stats-mappool.webp" alt="" loading="lazy" /></button>
+            <button type="button" data-src="assets/work/stats-scouting.webp" data-w="1600" data-h="1000"
+                    data-alt="Scouting view comparing two teams' players map by map"><img src="assets/work/stats-scouting.webp" alt="" loading="lazy" /></button>
+            <button type="button" data-src="assets/work/stats-tour.webp" data-w="1600" data-h="1000"
+                    data-alt="Aim Cup 5 tournament page listing its stages"><img src="assets/work/stats-tour.webp" alt="" loading="lazy" /></button>
+          </div>
+        </div>
+        <div class="proj__body">
+          <p class="proj__k">web app · live</p>
+          <h3>osu! tournament stats</h3>
+          <p class="proj__d">
+            Feed a stage its MP links and it pulls every score, lets an admin review them, and publishes the
+            stats: per map, per player and per team, plus a scouting view for the next match.
+          </p>
+          <ul class="proj__pts">
+            <li>Mappool pages with top plays and pick / ban rates</li>
+            <li>Seeding by zipf, ranked by accuracy or score</li>
+            <li>Head-to-head scouting between any two teams</li>
+          </ul>
+          <ul class="tags"><li>Next.js</li><li>PostgreSQL</li><li>osu! API v2</li></ul>
+          <div class="proj__links">
+            <a class="lnk" href="https://stats.byharuki.dev/t/ac5" target="_blank" rel="noopener">stats.byharuki.dev <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj proj--flip reveal">
+        <div class="proj__media gal">
+          <button type="button" class="gal__main" aria-label="Open screenshot full size">
+            <img src="assets/work/umacore-home.webp" width="1600" height="1000" loading="lazy" decoding="async"
+                 alt="UmaCore sign-in page with live stats: active clubs, today's quota and members" />
+          </button>
+          <div class="gal__thumbs">
+            <button type="button" class="on" data-src="assets/work/umacore-home.webp" data-w="1600" data-h="1000"
+                    data-alt="UmaCore sign-in page with live stats: active clubs, today's quota and members"><img src="assets/work/umacore-home.webp" alt="" loading="lazy" /></button>
+            <button type="button" data-src="assets/work/umacore-track.webp" data-w="1488" data-h="1150"
+                    data-alt="UmaCore's /track command in Discord: a course map of Nakayama 2500m with where each acceleration skill fires"><img src="assets/work/umacore-track.webp" alt="" loading="lazy" /></button>
+          </div>
+        </div>
+        <div class="proj__body">
+          <p class="proj__k">discord bot + dashboard · live</p>
+          <h3>UmaCore</h3>
+          <p class="proj__d">
+            Club management for Uma Musume. The bot tracks every member's daily and monthly fan quota and posts
+            reports; the dashboard lets club leaders and members check it without Discord.
+          </p>
+          <ul class="proj__pts">
+            <li>Used by 370+ clubs and 9,000+ members</li>
+            <li>Course maps showing where each skill fires</li>
+            <li>Verified Discord app</li>
+          </ul>
+          <ul class="tags"><li>Python</li><li>discord.py</li><li>Next.js</li><li>PostgreSQL</li></ul>
+          <div class="proj__links">
+            <a class="lnk" href="https://umacore.app/" target="_blank" rel="noopener">umacore.app <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </article>
+
+      <div class="also reveal">
+        <p class="also__h">also</p>
         <a class="row" href="https://aimcup.xyz/" target="_blank" rel="noopener">
           <span class="row__i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 21h8M12 17v4M6 4h12v4a6 6 0 0 1-12 0z"/></svg></span>
-          <span class="row__m"><span class="row__t">AimCup</span><span class="row__d">My osu! tournament</span></span>
-          <span class="row__k">aimcup.xyz</span>
-        </a>
-        <a class="row" href="https://stats.byharuki.dev/" target="_blank" rel="noopener">
-          <span class="row__i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
-          <span class="row__m"><span class="row__t">osu! tournament stats</span><span class="row__d">Ingest MP links, publish osu! tournament stats</span></span>
-          <span class="row__k">stats.byharuki.dev</span>
+          <span class="row__m"><span class="row__t">AimCup</span><span class="row__d">The osu! relax tournament I host with Hoaq since 2021</span></span>
+          <span class="row__k">aimcup.xyz ↗</span>
         </a>
         <a class="row" href="https://github.com/oHaruki/beatmap-downloader" target="_blank" rel="noopener">
           <span class="row__i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></svg></span>
           <span class="row__m"><span class="row__t">beatmap-downloader</span><span class="row__d">Filter and bulk download osu! beatmaps</span></span>
-          <span class="row__k">github</span>
+          <span class="row__k">github ↗</span>
         </a>
-      </section>
+      </div>
+    </section>
 
-      <section class="panel">
-        <div class="panel__h"><span class="t">wallpaper</span><span class="r">replaying</span></div>
-        <dl class="kv">
-          <dt>map</dt>        <dd id="p-title">-</dd>
-          <dt>difficulty</dt> <dd id="p-diff">-</dd>
-          <dt>mapper</dt>     <dd id="p-creator">-</dd>
-          <dt>cs / ar</dt>    <dd><span id="p-cs">-</span> / <span id="p-ar">-</span></dd>
-          <dt>combo</dt>      <dd><em id="p-combo">0</em>x</dd>
-          <dt>elapsed</dt>    <dd id="p-time">0:00 / 0:00</dd>
-        </dl>
-        <div class="meter"><i id="p-bar"></i></div>
-      </section>
-
-      <section class="panel" id="links">
-        <div class="panel__h"><span class="t">links</span></div>
-        <div class="soc">
-          <a href="https://osu.ppy.sh/users/3673149" target="_blank" rel="noopener">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg> osu!</a>
-          <a href="https://x.com/HarukiNiklas" target="_blank" rel="noopener">
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.2 3h3.3l-7.2 8.3L23 21h-6.6l-5.2-6.8L5.3 21H2l7.7-8.8L1.7 3h6.8l4.7 6.2L18.2 3zm-1.2 16h1.8L7.1 4.8H5.2L17 19z"/></svg> Twitter</a>
-          <a href="https://ko-fi.com/harukidev" target="_blank" rel="noopener">
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 6h13v7.5A4.5 4.5 0 0 1 12.5 18h-4A4.5 4.5 0 0 1 4 13.5V6z"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="M17 7.5h.75a2.75 2.75 0 1 1 0 5.5H17"/></svg> Ko-fi</a>
-          <a href="https://github.com/oHaruki" target="_blank" rel="noopener">
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-4.9 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.6.7 1 1.6 1 2.7 0 3.8-2.4 4.7-4.6 4.9.3.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg> GitHub</a>
-        </div>
-        <p class="foot">
-          © <span id="year"></span> haruki ·
-          bg: <a id="foot-map" href="https://osu.ppy.sh/" target="_blank" rel="noopener">beatmap</a>
+    <!-- ============================== HIRE ============================== -->
+    <section class="sec wrap" id="hire">
+      <header class="sec__h">
+        <p class="eyebrow"><i>3</i> hire</p>
+        <h2>Commission me</h2>
+        <p class="sec__lead">
+          I build web tools for osu! tournaments. Just message me on Discord with what you need.
         </p>
-      </section>
-    </div>
+      </header>
+
+      <article class="pkg reveal" id="hire-web">
+        <div class="pkg__body">
+          <p class="pkg__n">01</p>
+          <h3>Tournament web package</h3>
+          <p class="pkg__d">A website for your tournament, from sign-ups to grand finals.</p>
+          <ul class="feat">
+            <li><b>Player registration</b><span>osu! login, solo or team sign-ups</span></li>
+            <li><b>Schedule</b><span>match times, staff assignments and results</span></li>
+            <li><b>Mappool</b><span>every stage's pool with mods, stats and downloads</span></li>
+            <li><b>Bracket</b><span>double elimination, group stage or Swiss</span></li>
+            <li><b>Staff list</b><span>every role, linked to osu! profiles</span></li>
+            <li><b>And more</b><span>rules, qualifier lobbies, stats and scouting, an admin panel</span></li>
+          </ul>
+        </div>
+        <figure class="pkg__shots">
+          <button type="button" class="shot shot--a" data-full aria-label="Open screenshot full size">
+            <img src="assets/work/stats-mappool.webp" width="1600" height="1000" loading="lazy" decoding="async"
+                 alt="Stage mappool page with map covers, top plays and pick and ban rates" />
+          </button>
+          <button type="button" class="shot shot--b" data-full aria-label="Open screenshot full size">
+            <img src="assets/work/stats-summary.webp" width="1600" height="822" loading="lazy" decoding="async"
+                 alt="Stage summary: teams seeded with their placement on every map" />
+          </button>
+          <figcaption>Mappool and stats pages from Aim Cup 5.</figcaption>
+        </figure>
+      </article>
+
+      <article class="pkg pkg--flip reveal" id="hire-pool">
+        <div class="pkg__body">
+          <p class="pkg__n">02</p>
+          <h3>Mappool &amp; custom map management</h3>
+          <p class="pkg__d">The Pool Planner from above, set up for your tournament and your staff.</p>
+          <ul class="feat">
+            <li><b>Pool layout</b><span>stages, mod slots, best-of and bans in one place</span></li>
+            <li><b>Map claims</b><span>mappers claim or hold a slot, poolers see who is on what</span></li>
+            <li><b>Custom map tracking</b><span>.osz uploads, progress, checklist, hitsounds</span></li>
+            <li><b>QA &amp; playtesting</b><span>notes per map, playtest replays, a QA board</span></li>
+            <li><b>Pooling</b><span>suggest maps by beatmap id or link, flag ones used before</span></li>
+            <li><b>Roles &amp; export</b><span>admin, pooler, QA, mapper, playtester; copy the final pool out</span></li>
+          </ul>
+        </div>
+        <figure class="pkg__shots">
+          <button type="button" class="shot shot--a" data-full aria-label="Open screenshot full size">
+            <img src="assets/work/pool-custom.webp" width="1600" height="1000" loading="lazy" decoding="async"
+                 alt="Custom maps table with status, progress and star rating" />
+          </button>
+          <button type="button" class="shot shot--b" data-full aria-label="Open screenshot full size">
+            <img src="assets/work/pool-layout.webp" width="1600" height="722" loading="lazy" decoding="async"
+                 alt="Pool layout: stages with their mod slots, best-of, bans and star range" />
+          </button>
+          <figcaption>Pool Planner with demo data.</figcaption>
+        </figure>
+      </article>
+
+      <div class="pkg-more reveal">
+        <div>
+          <h3>Something else?</h3>
+          <p>
+            Discord bots, dashboards and small tools, like UmaCore or beatmap-downloader above.
+          </p>
+        </div>
+        <ol class="steps">
+          <li><i>01</i>Message me on Discord with what you need.</li>
+          <li><i>02</i>The price depends on what you need, how big it is and how much time it takes. If I have to design the whole frontend myself without a GFX artist, it costs more.</li>
+          <li><i>03</i>A full year of support: revisions and bug fixes included, no major redesigns.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================= CONTACT ============================= -->
+    <section class="sec wrap" id="contact">
+      <div class="contact reveal">
+        <div class="contact__copy">
+          <p class="eyebrow"><i>4</i> contact</p>
+          <h2>Message me on Discord</h2>
+          <p class="sec__lead">
+            Quickest way to reach me. Add me or send a DM with what you have in mind.
+          </p>
+        </div>
+        <button type="button" class="dc" data-copy="Haruki" aria-label="Copy Discord username Haruki">
+          <svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.3 5.3A16.6 16.6 0 0 0 15.2 4l-.5 1a15.4 15.4 0 0 0-5.4 0l-.5-1a16.5 16.5 0 0 0-4.1 1.3C2.1 9.2 1.4 13 1.7 16.7A16.7 16.7 0 0 0 6.8 19.3l1.1-1.7a10.7 10.7 0 0 1-1.7-.8l.4-.3a11.9 11.9 0 0 0 10.8 0l.4.3a10.7 10.7 0 0 1-1.7.8l1.1 1.7a16.6 16.6 0 0 0 5.1-2.6c.4-4.3-.7-8-3-11.4zM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/></svg>
+          <span class="dc__m">
+            <span class="dc__k">discord username</span>
+            <span class="dc__n">Haruki</span>
+          </span>
+          <span class="dc__copy" aria-hidden="true">copy</span>
+        </button>
+      </div>
+
+      <div class="soc">
+        <a href="https://osu.ppy.sh/users/3673149" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg> osu!</a>
+        <a href="https://x.com/HarukiNiklas" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.2 3h3.3l-7.2 8.3L23 21h-6.6l-5.2-6.8L5.3 21H2l7.7-8.8L1.7 3h6.8l4.7 6.2L18.2 3zm-1.2 16h1.8L7.1 4.8H5.2L17 19z"/></svg> Twitter</a>
+        <a href="https://ko-fi.com/harukidev" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 6h13v7.5A4.5 4.5 0 0 1 12.5 18h-4A4.5 4.5 0 0 1 4 13.5V6z"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="M17 7.5h.75a2.75 2.75 0 1 1 0 5.5H17"/></svg> Ko-fi</a>
+        <a href="https://github.com/oHaruki" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-4.9 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.6.7 1 1.6 1 2.7 0 3.8-2.4 4.7-4.6 4.9.3.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg> GitHub</a>
+      </div>
+
+      <p class="foot">
+        © <span id="year"></span> haruki ·
+        bg: <a id="foot-map" href="https://osu.ppy.sh/" target="_blank" rel="noopener">beatmap</a>
+      </p>
+    </section>
 
   </main>
+
+  <!-- Screenshot lightbox, filled by script.js -->
+  <dialog class="lb" id="lb" aria-label="Screenshot">
+    <form method="dialog"><button class="lb__x" aria-label="Close">esc</button></form>
+    <img id="lb-img" alt="" />
+    <p id="lb-cap"></p>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="map.js"></script>
   <script src="script.js"></script>

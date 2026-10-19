@@ -1,16 +1,21 @@
 # byharuki.dev
 
-A tiny, no-framework personal site. Styled after a **YASB status bar** - a fixed
-widget bar, panels built from the same grammar, and a real beatmap replaying
-beside them. Palette is [Tokyo Night](https://github.com/folke/tokyonight.nvim)
+A tiny, no-framework personal site and portfolio. Styled after a **YASB status
+bar** - a fixed widget bar, panels built from the same grammar, and a real
+beatmap replaying in the hero. Palette is [Tokyo Night](https://github.com/folke/tokyonight.nvim)
 (with a Tokyo Night Day light variant).
+
+One page, four sections: **home** (intro + replay), **work** (projects with
+screenshots), **hire** (commission packages) and **contact** (Discord username
+with a copy button).
 
 | File | What it's for |
 |------|---------------|
 | `index.html` | All the content. Edit the text here. |
 | `styles.css` | All the styling. Colours live at the very top under **THEME TOKENS**. |
-| `script.js`  | Theme toggle, clock, section pills, and the osu! playfield (tuning knobs in `CONFIG`). |
+| `script.js`  | Theme toggle, clock, section pills, copy button, screenshot gallery + lightbox, and the osu! playfield (tuning knobs in `CONFIG`). |
 | `map.js`     | Baked beatmap data the playfield replays. |
+| `assets/work/` | Portfolio screenshots, webp, 1600 px wide. |
 | `assets/og.png` | Social preview card (1200×630). |
 
 ## Preview it locally
@@ -24,18 +29,18 @@ change without waiting: `index.html?t=95`.
 
 ## How the layout works
 
-Two columns of panels. The playfield canvas is **fixed and full-bleed**, but it
-only *paints* inside the reserved `#pf-zone` box in the left column - that's why
-the replay never ends up underneath text. Move or resize `.pfzone` in
-`styles.css` and the renderer follows it automatically.
+A single scrolling page of panels. The playfield canvas is **fixed and
+full-bleed**, but it only *paints* inside the reserved `#pf-zone` box in the
+hero - that's why the replay never ends up underneath text. Move or resize
+`.pfzone` in `styles.css` and the renderer follows it automatically.
 
 A few things worth knowing before editing:
 
 - **No gradients anywhere.** A near-black gradient bands badly on real displays
   (visible vertical stripes), so the wallpaper is dimmed with a flat `.scrim`
   instead. If you add a large dark gradient, expect stripes.
-- **Mono is the UI face.** `Inter` is used for exactly one thing: the `about`
-  paragraph, because a block of prose in monospace is hard to read.
+- **Mono is the UI face.** `Geist` is used for headings and prose, because a
+  block of prose in monospace is hard to read.
 - **Every number is derived.** Object count, slider count, CS and AR are all
   computed from `map.js` at runtime - CS/AR by inverting the formulas in
   `tools/convert.js`. Swap the map and the whole page updates itself.
@@ -60,8 +65,12 @@ The footer credit, the bar's map widget and the `fetch` panel all read from
 
 Everything is marked with `<!-- comments -->` in `index.html`:
 
-- **Name / tagline** - the `.who` block in the right column.
-- **about / tools / links** - the `<section class="panel">` blocks.
+- **Intro** - the `.hero` section.
+- **Projects** - one `<article class="proj">` each. The first thumb in
+  `.gal__thumbs` should match the main image; every thumb carries the full
+  image's `data-src`, size and alt text.
+- **Commission packages** - the `<article class="pkg">` blocks in `#hire`.
+- **Discord username** - the `data-copy` attribute on both copy buttons.
 - **Bar widgets** - the `.w` chips in `<header class="bar">`.
 - **fetch panel** - the `.nf__kv` list; `renderer` and `theme` are static, the
   rest come from `map.js` or the browser.
@@ -76,3 +85,18 @@ light value). The canvas reads it at runtime, so the playfield follows.
 See [DEPLOY.md](./DEPLOY.md). Short version: push to `main`, then
 **GitHub → Actions → "Deploy to VPS" → Run workflow**. The runner SSHes in and
 `git pull`s; nginx serves the files directly, so there's no build step.
+
+---
+
+## Screenshots
+
+The shots in `assets/work/` were taken with Playwright at 1440×900, 2x, then
+resized to 1600 px wide webp (quality 80):
+
+- **Pool Planner** - aimcup-mappool's dev server with its demo seed
+  (`npm run db:up && npm run db:migrate && npm run db:seed`, then
+  `DEV_AUTH=true npm run dev`), viewed as Admin with the "View as" box and the
+  Next.js dev badge hidden.
+- **Stats** - the live stats.byharuki.dev Aim Cup 5 pages.
+- **UmaCore / UmaStudio** - the live sites, plus the images UmaStudio's site
+  already uses.
